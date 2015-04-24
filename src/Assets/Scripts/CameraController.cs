@@ -1,19 +1,19 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-	public GameObject player;
+	public GameObject Player;
 
 	private Vector3 offset;
 
 	void Start()
 	{
-		offset = transform.position;
+		this.offset = this.transform.position;
 	}
 	
 	void LateUpdate()
 	{
-		transform.position = player.transform.position + offset;
+		this.transform.position = this.Player.transform.position + this.offset;
 	}
 }

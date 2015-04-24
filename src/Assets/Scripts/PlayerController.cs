@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,14 +7,13 @@ public class PlayerController : MonoBehaviour
 	public GUIText CountText;
 	public GUIText WinText;
 
-	private const string CountTextPrefix = "Count: ";
 	private int count;
 
 	public void Start()
 	{
-		count = 0;
-		CountText.text = CountTextPrefix + count;
-		WinText.gameObject.SetActive (false);
+		this.WinText.gameObject.SetActive(false);
+		this.count = 0;
+		this.UpdateUI();
 	}
 
 	public void FixedUpdate()
@@ -24,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
 		var movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-		GetComponent<Rigidbody>().AddForce(movement * Speed * Time.deltaTime);
+		GetComponent<Rigidbody>().AddForce(movement * this.Speed * Time.deltaTime);
 	}
 
 	public void OnTriggerEnter(Collider other)
@@ -32,12 +31,17 @@ public class PlayerController : MonoBehaviour
 		if (other.gameObject.tag == "PickUp")
 		{
 			other.gameObject.SetActive(false);
-			count++;
-			CountText.text = CountTextPrefix + count;
-			if (count >= 12)
-			{
-				WinText.gameObject.SetActive(true);
-			}
+			this.count++;
+			this.UpdateUI();
+		}
+	}
+
+	private void UpdateUI()
+	{
+		this.CountText.text = "Count " + this.count;
+		if (this.count >= 12)
+		{
+			this.WinText.gameObject.SetActive(true);
 		}
 	}
 }
